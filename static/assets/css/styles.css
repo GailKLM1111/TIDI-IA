@@ -1,0 +1,225 @@
+img {
+}
+
+.btn-header {
+  border-color: #003366;
+  font-family: 'Cantarell';
+  background: #003366;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.card-asignatura {
+  width: 385px;
+  border-radius: 51px;
+  --bs-card-spacer-y: 1rem;
+  --bs-card-spacer-x: 1rem;
+  --bs-card-title-spacer-y: 0.5rem;
+  --bs-card-border-width: var(--bs-border-width);
+  --bs-card-border-color: var(--bs-border-color-translucent);
+  --bs-card-border-radius: var(--bs-border-radius);
+  --bs-card-inner-border-radius: calc(var(--bs-border-radius) - (var(--bs-border-width)));
+  --bs-card-cap-padding-y: 0.5rem;
+  --bs-card-cap-padding-x: 1rem;
+  --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.03);
+  --bs-card-bg: var(--bs-body-bg);
+  --bs-card-img-overlay-padding: 1rem;
+  --bs-card-group-margin: 0.75rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--bs-body-color);
+  word-wrap: break-word;
+  border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  /*border-radius: var(--bs-card-border-radius);*/
+  background: linear-gradient(0deg, var(--bs-orange) 0%, white 59%), var(--bs-card-bg);
+}
+
+.alert-aviso {
+  font-family: 'Cantarell';
+  background: #90e2b3;
+  color: #003366;
+  border-radius: 51px;
+  font-size: 20px;
+}
+
+.container-asignaturas {
+}
+
+.accordion-actividad {
+  /*font-size: 25px;*/
+  font-family: 'Cantarell';
+  color: #003366;
+}
+
+.accordion-button-actividad {
+  border-radius: 51px;
+  font-size: 25px;
+}
+
+.btn-contenido {
+  background: #003366;
+  font-family: 'Cantarell';
+}
+
+.span-contenido {
+  font-size: 25px;
+  font-family: 'Cantarell';
+}
+
+.btn-amarillo:hover {
+  font-family: 'Cantarell';
+  background: #a07e00;
+  color: #ffffff;
+  border-color: #a07e00;
+}
+
+.btn-amarillo {
+  font-family: 'Cantarell';
+  background: #BD9500;
+  color: #ffffff;
+  border-color: #BD9500;
+}
+
+.btn-gris {
+  font-family: 'Cantarell';
+  background: #757575;
+  border-color: rgba(117,117,117,0);
+}
+
+.btn-gris:hover {
+  background: #525252;
+  border-color: #757575;
+}
+
+.btn-azul {
+  background: #003366;
+  font-family: 'Cantarell';
+}
+
+.btn-azul:hover {
+  background: #0060c1;
+}
+
+.btn-header:hover {
+  background: #003366;
+}
+
+.card-contenido {
+  border-radius: 51px;
+  overflow: hidden;
+}
+
+.card-contenido:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.card-contenido:active {
+  transform: scale(0.99);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.navbar-tidi {
+  background: #003366;
+}
+
+.label-crud {
+  font-family: 'Cantarell';
+  font-weight: bold;
+  color: #003366;
+  font-size: 20px;
+}
+
+.label-crud-radio {
+  color: #003366;
+  font-size: 25px;
+  font-family: 'Cantarell';
+  margin-bottom: 0px;
+}
+
+.form-crud {
+  font-family: 'Cantarell';
+  color: #003366;
+}
+
+.thead-crud {
+  font-family: 'Cantarell';
+  background: #003366 !important;
+}
+
+.tbody-crud {
+  font-family: 'Cantarell';
+}
+
+.tr-head-crud {
+  background: inherit;
+}
+
+.th-head-crud {
+  background: #003366 !important;
+  color: #ffffff !important;
+}
+
+.th-body-par {
+  color: #003366 !important;
+  background: var(--bs-gray-200) !important;
+}
+
+.th-body-non {
+  color: #003366 !important;
+  background: var(--bs-gray-100) !important;
+}
+
+.btn-auto {
+  color: #ffffff;
+}
+
+.btn-amarillo:active {
+  font-family: 'Cantarell';
+  background: #957500 !important;
+  border-style: none;
+  border-color: #a07e00;
+  color: #ffffff !important;
+}
+
+.table-crud {
+  color: #FFFFFF;
+  font-family: 'Cantarell';
+}
+
+#switch-contenido:checked {
+  width: 60px;
+  height: 30px;
+  margin: 0px;
+  background-color: #003366;
+}
+
+#switch-contenido {
+  width: 60px;
+  height: 30px;
+  margin: 0px;
+}
+
+.container-fechas {
+  padding: 0;
+}
+
+.select-tema {
+  font-family: 'Cantarell';
+  color: #003366;
+}
+
+/*Estilo para cambiar el color del fondo al momento de seleccionar un tema*/
+/*Cuando select-tema este en estado focus cambiar el color de fondo a la clase option-tema*/
+.select-tema:focus option:checked {
+  box-shadow: 0 0 10px 100px #003366 inset;
+  color: #ffffff !important;
+}
+
+.select-tema option:checked {
+  color: #003366 !important;
+}

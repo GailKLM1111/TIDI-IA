@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>BS_IPTIDI</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css?h=a549af2a81cd9900ee897d8bc9c4b5e9">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cambay:400,700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cantarell:700&amp;subset=latin-ext&amp;display=swap">
+    <link rel="stylesheet" href="../static/assets/css/Login-Form-Basic-icons.css?h=cb6bfa29dd54a2e3807e6c7db8cc8f5a">
+    <link rel="stylesheet" href="../static/assets/css/styles.css?h=b962d8285278184d96eacc46fec7a94a">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-tidi">
+        <div class="container-fluid">
+            <div class="container text-center" style="margin-top: 10px;margin-bottom: 10px;">
+                <div class="row">
+                    <div class="col-md-4 col-xxl-3 offset-xxl-0 align-self-center" style="/*margin: 50;*/"><img class="img-fluid" src="../static/assets/img/Imagotipo%20final%20plataforma%20tidi%20ia%20blanco-04%201%20(1).svg?h=78a72385a8e25eacb95720a1e9534356"></div>
+                    <div class="col-md-4 col-xxl-1 offset-6 align-self-center"><img class="img-fluid" src="../static/assets/img/Escudo%20unam%20blanco%201.svg?h=9cd4c3d52556f121c3d3a973dfdf065c"></div>
+                    <div class="col-md-4 col-xxl-2 align-self-center"><img class="img-fluid" width="118" height="94" src="../static/assets/img/tidi%20blanco-02%201.svg?h=1c8547b45cf23c8a84f16af5e598e616"></div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col offset-5"><button class="btn btn-primary btn-lg btn-header" id="btn-asignaturas" type="button">Asignaturas</button></div>
+                    <div class="col d-xxl-flex justify-content-xxl-center align-items-xxl-center"><button class="btn btn-primary btn-lg d-xxl-flex align-items-xxl-center btn-header" id="btn-cuenta" type="button"><img src="../static/assets/img/__Mi%20cuenta%20blanco.svg?h=efd811d953889482753b433b235346bc" style="height: 20px;">Mi cuenta</button></div>
+                    <div class="col justify-content-xxl-center"><button class="btn btn-primary btn-lg d-xxl-flex align-items-xxl-center btn-header" id="btn-cerrar-sesion" type="button"><img src="../static/assets/img/__Inicio%20de%20sesión%20blanco.svg?h=5625d411503dfbb7765638e5bbce52ef" style="width: 30px;">Cerrar&nbsp;sesión</button></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container py-4 py-xl-5 container-asignaturas">
+        <div class="row mb-2">
+            <div class="col">
+                <h2 style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 35px;">{{ vcNombTema }}</h2>
+                <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;"> Tema {{ iNumTema }}</p>
+            </div>
+        </div>
+
+        {% if iTipoUsuario == 1 %}
+        <div class="row d-xxl-flex justify-content-xxl-end mb-2">
+            <div class="col col-auto" style="margin-bottom: 24px;">
+                <a class="btn btn-lg d-xxl-flex align-items-xxl-center btn-success btn-guardar" style="font-family: 'Cantarell';" type="button" href="{{ url_for('crud_contenido') }}">
+                    <img class="img-footer-patron" src="../static/assets/img/__Agregar%20blanco.svg" />
+                    Agregar contenido
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="row row-cols-1 gy-4">
+
+            {% for contenidos in contenidos -%}
+                <form action="{% if contenidos.iTipo == 1 %} /actividad
+                                {% elif contenidos.iTipo == 2 %} /video
+                                {% elif contenidos.iTipo == 3 %} /archivo
+                                {% endif %}"
+                      id="contenido-{{ contenidos.iNumContenido }}"
+                      method="POST">
+                    <div class="col offset-xxl-0">
+                        <div class="card card-contenido" onclick="enviarFormulario('contenido-{{ contenidos.iNumContenido }}')" >
+                            <div class="row g-0">
+                                <div class="d-xxl-flex justify-content-xxl-end align-items-xxl-center col-md-1">
+                                    {% if contenidos.iTipo == 1 %}
+                                        <img src="../static/assets/img/__Tarea.svg?h=daff51d1798dcaac435f9986c6af2376" height="80">
+                                    {% elif contenidos.iTipo == 2 %}
+                                        <img src="../static/assets/img/__Video.svg?h=3f16d94cc8e3406a28084c48583c4024" height="80">
+                                    {% elif contenidos.iTipo == 3 %}
+                                        <img src="../static/assets/img/__Examen.svg?h=a0590f23a1e0a2e6b45c4b42032d5683" height="80">
+                                    {% endif %}
+                                </div>
+                                <div class="col">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="font-family: Cantarell, sans-serif;font-weight: bold;color: #003366;">
+                                            {{ contenidos.vcTitulo }}
+                                        </h4>
+                                        <p class="card-text" style="font-family: 'Cantarell';">
+                                            {% if contenidos.iTipo == 1 %}
+                                                Actividad de aprendizaje
+                                            {% elif contenidos.iTipo == 2 %}
+                                                Video
+                                            {% elif contenidos.iTipo == 3 %}
+                                                Archivo
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="background: {{ '#' + cColorHexAsignatura }};">
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+
+{#            <div class="col offset-xxl-0" id="col-video">#}
+{#                <div class="card card-contenido">#}
+{#                    <div class="row g-0">#}
+{#                        <div class="d-xxl-flex justify-content-xxl-end align-items-xxl-center col-md-1"><img src="../static/assets/img/__Video.svg?h=3f16d94cc8e3406a28084c48583c4024" height="80"></div>#}
+{#                        <div class="col">#}
+{#                            <div class="card-body">#}
+{#                                <h4 class="card-title" style="font-family: Cantarell, sans-serif;font-weight: bold;color: #003366;">Video</h4>#}
+{#                                <p class="card-text" style="font-family: 'Cantarell';">Pirámide de Kaiser</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-1" style="background: var(--bs-orange);">#}
+{#                            <div></div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col offset-xxl-0" id="col-actividad">#}
+{#                <div class="card card-contenido">#}
+{#                    <div class="row g-0">#}
+{#                        <div class="d-xxl-flex justify-content-xxl-end align-items-xxl-center col-md-1">#}
+{#                            <img src="../static/assets/img/__Tarea.svg?h=daff51d1798dcaac435f9986c6af2376" height="80">#}
+{#                        </div>#}
+{#                        <div class="col">#}
+{#                            <div class="card-body">#}
+{#                                <h4 class="card-title" style="font-family: Cantarell, sans-serif;font-weight: bold;color: #003366;">Actividad</h4>#}
+{#                                <p class="card-text" style="font-family: 'Cantarell';">Pirámide de Kaiser</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-1" style="background: var(--bs-orange);">#}
+{#                            <div></div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col offset-xxl-0" id="col-examen">#}
+{#                <div class="card card-contenido">#}
+{#                    <div class="row g-0">#}
+{#                        <div class="d-xxl-flex justify-content-xxl-end align-items-xxl-center col-md-1"><img src="../static/assets/img/__Examen.svg?h=a0590f23a1e0a2e6b45c4b42032d5683" height="80"></div>#}
+{#                        <div class="col">#}
+{#                            <div class="card-body">#}
+{#                                <h4 class="card-title" style="font-family: Cantarell, sans-serif;font-weight: bold;color: #003366;">Examen</h4>#}
+{#                                <p class="card-text" style="font-family: 'Cantarell';">Pirámide de Kaiser</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-1" style="background: var(--bs-orange);">#}
+{#                            <div></div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+    </div>
+    <script src="../static/assets/js/jquery.min.js?h=6bcc3684f18aa21874fa709f122723cf"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js?h=374d178d651fa0eaf680a1fa7b40c788"></script>
+    <script src="../static/assets/js/asignaturas.js?h=8aeeb8bf7333ec17ad6a4734aa2e949a"></script>
+{#    <script src="../static/assets/js/crud-contenidos.js?h=311c0b07c7c85b9ddd946b7ded6a1bff"></script>#}
+    <script src="../static/assets/js/login.js?h=8b5d69aa014e93ea1e4a2cb62d4d07ff"></script>
+    <script src="../static/assets/js/omni.js?h=457204e222950430a6340870dd601a30"></script>
+    <script src="../static/assets/js/tema.js?h=263fb8e73e0ca9881cbf2e7cfa173e37"></script>
+    <script src="../static/assets/js/temas.js?h=81d10140ceb8b3cd4cd46c69b7154d08"></script>
+</body>
+
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>BS_IPTIDI</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css?h=a549af2a81cd9900ee897d8bc9c4b5e9">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cambay:400,700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cantarell:700&amp;subset=latin-ext&amp;display=swap">
+    <link rel="stylesheet" href="../static/assets/css/Login-Form-Basic-icons.css?h=cb6bfa29dd54a2e3807e6c7db8cc8f5a">
+    <link rel="stylesheet" href="../static/assets/css/styles.css?h=b962d8285278184d96eacc46fec7a94a">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-tidi">
+    <div class="container-fluid">
+        <div class="container text-center" style="margin-top: 10px;margin-bottom: 10px;">
+            <div class="row">
+                <div class="col-md-4 col-xxl-3 offset-xxl-0 align-self-center" style="/*margin: 50;*/"><img class="img-fluid" src="../static/assets/img/Imagotipo%20final%20plataforma%20tidi%20ia%20blanco-04%201%20(1).svg?h=78a72385a8e25eacb95720a1e9534356"></div>
+                <div class="col-md-4 col-xxl-1 offset-6 align-self-center"><img class="img-fluid" src="../static/assets/img/Escudo%20unam%20blanco%201.svg?h=9cd4c3d52556f121c3d3a973dfdf065c"></div>
+                <div class="col-md-4 col-xxl-2 align-self-center"><img class="img-fluid" width="118" height="94" src="../static/assets/img/tidi%20blanco-02%201.svg?h=1c8547b45cf23c8a84f16af5e598e616"></div>
+            </div>
+            <div class="row mt-2">
+                <div class="col offset-5"><button class="btn btn-primary btn-lg btn-header" id="btn-asignaturas" type="button">Asignaturas</button></div>
+                <div class="col d-xxl-flex justify-content-xxl-center align-items-xxl-center"><button class="btn btn-primary btn-lg d-xxl-flex align-items-xxl-center btn-header" id="btn-cuenta" type="button"><img src="../static/assets/img/__Mi%20cuenta%20blanco.svg?h=efd811d953889482753b433b235346bc" style="height: 20px;">Mi cuenta</button></div>
+                <div class="col justify-content-xxl-center"><button class="btn btn-primary btn-lg d-xxl-flex align-items-xxl-center btn-header" id="btn-cerrar-sesion" type="button"><img src="../static/assets/img/__Inicio%20de%20sesión%20blanco.svg?h=5625d411503dfbb7765638e5bbce52ef" style="width: 30px;">Cerrar&nbsp;sesión</button></div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container py-4 py-xl-5 container-asignaturas">
+    <div class="row mb-2">
+        <div class="col">
+            <h2 style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 35px;"><strong>Diseño instruccional</strong></h2>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col"><select id="select-tema" class="form-select-lg form-select select-tema" multiple size="5" aria-label="Multiple select example">
+            <optgroup label="Seleccione un tema para añadir o editar un contenido.">
+                {% for tema in temas %}
+                    <option value="{{ tema.iNumTema }}"
+                            {% if tema.iNumTema == temaActual %} selected {% endif %}>
+                        {{ tema.vcNombTema }}
+                    </option>
+                {% endfor %}
+            </optgroup>
+        </select></div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col"><select id="select-contenido" class="form-select-lg form-select select-tema" multiple size="5" aria-label="Multiple select example">
+            <optgroup label="Seleccione el contenido que se editará o Nuevo contenido.">
+                <option value="0" {% if contenidoActual == 0 %} selected {% endif %}>Nuevo contenido</option>
+                {% for contenido in contenidos %}
+                    <option value="{{ contenido.iNumContenido }}"
+                            {% if contenido.iNumContenido == contenidoActual %} selected {% endif %}>
+                        {{ contenido.vcTitulo }}
+                    </option>
+                {% endfor %}
+            </optgroup>
+        </select></div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col">
+            <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;">Escoja el tipo de contenido que se añadirá al tema seleccionado.&nbsp;</p>
+        </div>
+    </div>
+    <div class="row mb-2">
+        {#            <div class="col">#}
+        {#                <button class="btn btn-primary btn-lg d-block w-100 btn-contenido" type="button">#}
+        {#                    <img src="../static/assets/img/__Tarea%20blanco.svg?h=cc79788943760a390aff81710b79808d" width="34" height="50" style="height: 30px;width: 30px;">#}
+        {#                    <span style="font-size: 15px;">Actividad de Aprendizaje</span>#}
+        {#                </button>#}
+        {#            </div>#}
+        <div class="col">
+            <button id="btn-actividad"
+                    onclick="mostrarCollapse(this)"
+                    class="btn btn-primary btn-lg d-block w-100 btn-contenido" type="button">
+                <img src="../static/assets/img/__Tarea%20blanco.svg?h=cc79788943760a390aff81710b79808d" width="34" height="50" style="height: 30px;width: 30px;">
+                <span style="font-size: 15px;">Actividad de Aprendizaje</span>
+            </button>
+        </div>
+        <div class="col">
+            <button id="btn-video"
+                    onclick="mostrarCollapse(this)"
+                    class="btn btn-primary btn-lg d-block w-100 btn-contenido" type="button">
+                <img src="../static/assets/img/__Video%20blanco.svg?h=3b4d66ee5e75319608e8bfb30ed0b204" style="height: 30px;"><span style="font-size: 20px;">Video</span>
+            </button>
+        </div>
+        {#            <div class="col"><button class="btn btn-primary btn-lg d-block w-100 btn-contenido" type="submit"><img src="../static/assets/img/__Video%20blanco.svg?h=3b4d66ee5e75319608e8bfb30ed0b204" style="height: 30px;"><span style="font-size: 20px;">Video</span></button></div>#}
+        <div class="col">
+            <button id="btn-archivo"
+                    onclick="mostrarCollapse(this)"
+                    class="btn btn-primary btn-lg d-block w-100 btn-contenido" type="button">
+                <img src="../static/assets/img/__Examen%20blanco.svg?h=3b4d66ee5e75319608e8bfb30ed0b204" style="height: 30px;"><span style="font-size: 20px;">Archivo</span>
+            </button>
+        </div>
+        <!-- <div class="col"><button class="btn btn-primary btn-contenido" type="button" data-bs-toggle="collapse" aria-controls="collapse-actividad" data-bs-target="#collapse-actividad" aria-expanded="true">Button</button></div> -->
+    </div>
+    <div class="row mb-2 row-cols-1 gy-4">
+        <div class="col">
+            <div class="collapse" id="collapse-actividad">
+                <div class="mt-4"><label class="form-label label-crud" for="text-titulo">Asigne un titulo a la actividad de aprendizaje</label>
+                    <div class="input-group"><span class="input-group-text span-contenido"><img src="../static/assets/img/__Tarea.svg?h=daff51d1798dcaac435f9986c6af2376" height="40" style="margin: 10px;margin-left: 0px;">Titulo</span>
+                        <textarea class="form-control" id="text-titulo"></textarea>
+                    </div>
+                </div>
+                <div class="mt-4"><label class="form-label label-crud" for="text-objetivos">Describa los objetivos de la actividad de aprendizaje</label>
+                    <div class="input-group"><span class="input-group-text span-contenido"><img src="../static/assets/img/__Objetivos.svg?h=2a2d58655e83d4c6f3fe88e1f790a0cd" height="40" style="margin: 10px;margin-left: 0px;">Objetivos</span>
+                        <textarea class="form-control" id="text-objetivos"></textarea>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="container-fluid container-fechas">
+                        <div class="row">
+                            <div class="col"><label class="form-label label-crud" for="text-objetivos-4">Ingrese la fecha de inicio de la actividad:</label>
+                                <input id="dFecInicio" class="form-control-lg form-control" type="date"
+                                       value=""
+                                       required
+                                />
+                            </div>
+                            <div class="col"><label class="form-label label-crud" for="text-objetivos-4">Ingrese la fecha de fin de la actividad:</label>
+                                <input id="dFecFin" class="form-control-lg form-control" type="date"
+                                       value=""
+                                       required
+                                />
+                            </div>
+                            <div class="col d-xxl-flex align-items-xxl-end col-auto">
+                                <div class="form-check form-switch d-xxl-flex align-items-xxl-center" style="padding: 0;">
+                                    <input name="switch-contenido-actividad" id="switch-contenido" class="form-check-input" type="checkbox" role="switch"/>
+                                    <label class="form-check-label label-crud" for="formCheck-1">Mostrar Actividad</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4"><label class="form-label label-crud" for="text-caso"> Describa el caso virtual: </label>
+                    <input class="form-control-lg form-control form-crud" type="text" id="text-caso" placeholder="Describe tu unidad de salud..." required=""></div>
+                <div class="mt-4"><label class="form-label label-crud" for="table-matriz-cuestionario">Desarrolle la matriz de evaluación para el caso virtual anterior:</label>
+                    <div class="table-responsive table-crud">
+                        <table class="table table-bordered align-middle" id="table-matriz-cuestionario">
+                            <thead class="text-center">
+                            <tr>
+                                <th class="th-head-crud" style="width: 5%;">Parte</th>
+                                <th class="th-head-crud" style="width: 11%;">Valor</th>
+                                <th class="th-head-crud">Patrón de evaluación</th>
+                                <th class="th-head-crud">Variante</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center tbody-crud">
+                            <tr>
+                                <td class="th-body-non">1</td>
+                                <td class="text-b th-body-non">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud text-b" placeholder="80"><span class="input-group-text text-b">%</span><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                                <td class="text-b th-body-non">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud text-b" placeholder="El modelo de financiamiento es"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                                <td class="text-b th-body-non">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud text-b" placeholder="Pública"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th-body-non"></td>
+                                <td class="th-body-non"></td>
+                                <td class="th-body-non">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud" placeholder="La unidad es de atención"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                                <td class="th-body-non"></td>
+                            </tr>
+                            <tr id="tr-footer-parte-1">
+                                <td class="th-head-crud"></td>
+                                <td class="th-head-crud" style="width: 11%;"></td>
+                                <td class="th-head-crud">
+                                    <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center"><button class="btn btn-success d-xxl-flex align-items-xxl-center" type="button"><img class="img-footer-patron" src="../static/assets/img/__Agregar%20blanco.svg?h=79e36de831e246acbeec65e8ed429d3d">Agregar patrón</button></div>
+                                </td>
+                                <td class="th-head-crud">
+                                    <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center"><button class="btn btn-success d-xxl-flex align-items-xxl-center" type="button"><img class="img-footer-patron" src="../static/assets/img/__Agregar%20blanco.svg?h=79e36de831e246acbeec65e8ed429d3d">Agregar variante</button></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th-body-par">2</td>
+                                <td class="th-body-par">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud" placeholder="20"><span class="input-group-text text-b">%</span><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                                <td class="th-body-par">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud" placeholder="Se atienden pacientes de"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                                <td class="th-body-par">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud" placeholder="Primer nivel"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th-body-par"></td>
+                                <td class="th-body-par"></td>
+                                <td class="th-body-par">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud" placeholder="Se atienden enfermedades de"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                                <td class="th-body-par">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud" placeholder="Curación"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th-body-par"></td>
+                                <td class="th-body-par"></td>
+                                <td class="th-body-par"></td>
+                                <td class="th-body-par">
+                                    <div class="input-group text-b"><input type="text" class="form-control form-crud" placeholder="Prevención"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;"></button></div>
+                                </td>
+                            </tr>
+                            <tr id="tr-footer-matriz">
+                                <td class="th-head-crud">
+                                    <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center"><button class="btn btn-success d-xxl-flex align-items-xxl-center" type="button"><img class="img-footer-patron" src="../static/assets/img/__Agregar%20blanco.svg?h=79e36de831e246acbeec65e8ed429d3d">Parte</button></div>
+                                </td>
+                                <td class="th-head-crud" style="width: 11%;">
+                                    <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center"><button class="btn d-xxl-flex align-items-xxl-center btn-amarillo" type="button"><img class="img-footer-patron" src="../static/assets/img/__Porcentaje.svg?h=e0194337863191c4054f513826cc24a0">Auto</button></div>
+                                </td>
+                                <td class="th-head-crud">
+                                    <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center"><button class="btn btn-success d-xxl-flex align-items-xxl-center" type="button"><img class="img-footer-patron" src="../static/assets/img/__Agregar%20blanco.svg?h=79e36de831e246acbeec65e8ed429d3d">Agregar patrón</button></div>
+                                </td>
+                                <td class="th-head-crud">
+                                    <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center"><button class="btn btn-success d-xxl-flex align-items-xxl-center" type="button"><img class="img-footer-patron" src="../static/assets/img/__Agregar%20blanco.svg?h=79e36de831e246acbeec65e8ed429d3d">Agregar variante</button></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="mt-4"><button class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-guardar" id="btn-guardar-pym" type="submit" style="font-family: 'Cantarell';"><img class="img-footer-patron" src="../static/assets/img/__Tabla%20blanco.svg?h=585c569282d9ef15578fd33e789ee247">Guardar caso virtual y matriz de evaluación</button></div>
+                <div class="mt-4"><label class="form-label label-crud" for="table-preguntas">Registro de casos virtuales guardados:</label>
+                    <div class="table-responsive table-crud" id="table-preguntas">
+                        <table class="table table-bordered align-middle" id="table-registro-preguntas">
+                            <thead class="text-center">
+                            <tr>
+                                <th class="th-head-crud" style="width: 5%;">#</th>
+                                <th class="th-head-crud">Caso virtual</th>
+                                <th class="th-head-crud" style="width: 23%;">Posibles patrones</th>
+                                <th class="th-head-crud" style="width: 21%;">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center tbody-crud">
+                            <!--                                        <tr>-->
+                            <!--                                            <td class="th-body-non">1</td>-->
+                            <!--                                            <td class="text-b th-body-non">Describe el pizarrón de tu aula</td>-->
+                            <!--                                            <td class="text-b th-body-non">8</td>-->
+                            <!--                                            <td class="text-b th-body-non">-->
+                            <!--                                                <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center container-fluid">-->
+                            <!--                                                    <div class="row">-->
+                            <!--                                                        <div class="col-auto"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;" width="20" height="20">&nbsp;Borrar</button></div>-->
+                            <!--                                                        <div class="col-auto"><button class="btn d-xxl-flex align-items-xxl-center btn-amarillo" type="button"><img class="img-footer-patron" src="../static/assets/img/__Editar%20blanco.svg?h=a3c3716e4dfd91cfa3ee9f5710eb6c0d">Editar</button></div>-->
+                            <!--                                                    </div>-->
+                            <!--                                                </div>-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr>-->
+                            <!--                                            <td class="th-body-non">2</td>-->
+                            <!--                                            <td class="th-body-non">Otra pregunta</td>-->
+                            <!--                                            <td class="th-body-non">2</td>-->
+                            <!--                                            <td class="th-body-non">-->
+                            <!--                                                <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center container-fluid">-->
+                            <!--                                                    <div class="row">-->
+                            <!--                                                        <div class="col-auto"><button class="btn btn-danger d-xxl-flex justify-content-xxl-center align-items-xxl-center" type="button" style="padding: 6px;"><img src="../static/assets/img/__Eliminar%20blanco.svg?h=37ef7233372994a8ebfc6b68b98f2644" style="width: 20px;" width="20" height="20">&nbsp;Borrar</button></div>-->
+                            <!--                                                        <div class="col-auto"><button class="btn d-xxl-flex align-items-xxl-center btn-amarillo" type="button"><img class="img-footer-patron" src="../static/assets/img/__Editar%20blanco.svg?h=a3c3716e4dfd91cfa3ee9f5710eb6c0d">Editar</button></div>-->
+                            <!--                                                    </div>-->
+                            <!--                                                </div>-->
+                            <!--                                            </td>-->
+                            <!--                                        </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="mt-4" >
+                    <button class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-guardar"
+                            id="btn-guardar" type="button" style="font-family: 'Cantarell';"
+                            onclick="guardarActividad();">
+                        <img class="img-footer-patron" src="../static/assets/img/__Palomita.svg?h=51f400c4ab0a7851208de7357cf4b75e">
+                        Guardar actividad de aprendizaje
+                    </button>
+                    <div class="row d-xxl-flex align-items-xxl-center row-cols-2 gy-4" id="div-editar">
+                        <div class="col col-md-6">
+                            <button class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-amarillo"
+                                    id="btn-editar" type="button" style="font-family: 'Cantarell';"
+                                    onclick="editarActividad();">
+                                <img class="img-footer-patron" src="../static/assets/img/__Editar blanco.svg">
+                                Guardar cambios
+                            </button>
+                        </div>
+                        <div class="col col-md-6">
+                            <button class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-danger"
+                                    id="btn-eliminar"
+                                    type="button" style="font-family: 'Cantarell';"
+                                    onclick="eliminarActividad();">
+                                <img class="img-footer-patron" src="../static/assets/img/__Eliminar%20blanco.svg">
+                                Eliminar actividad de aprendizaje
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapse" id="collapse-video">
+                <form action="/crud_contenido" method="POST" enctype="multipart/form-data" id="form-video">
+                    <div class="mt-4"><label class="form-label label-crud" for="text-titulo">Asigne un titulo al video</label>
+                        <div class="input-group"><span class="input-group-text span-contenido"><img src="../static/assets/img/__Tarea.svg?h=daff51d1798dcaac435f9986c6af2376" height="40" style="margin: 10px;margin-left: 0px;">Titulo</span>
+                            <textarea class="form-control" name="vcTitulo" id="text-titulo"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-4"><label class="form-label label-crud" for="text-objetivos">Describa los objetivos del video</label>
+                        <div class="input-group"><span class="input-group-text span-contenido"><img src="../static/assets/img/__Objetivos.svg?h=2a2d58655e83d4c6f3fe88e1f790a0cd" height="40" style="margin: 10px;margin-left: 0px;">Objetivos</span>
+                            <textarea class="form-control" name="vcObjetivos" id="text-objetivos"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="container-fluid container-fechas">
+                            <div class="row">
+                                <div class="col"><label class="form-label label-crud" for="text-objetivos-4">Ingrese la fecha de publicación del video:</label>
+                                    <input name="dFecInicio"
+                                           id="dFecInicio"
+                                           class="form-control-lg form-control" type="date"
+                                           value=""
+                                           required
+                                    />
+                                </div>
+                                <div class="col"><label class="form-label label-crud" for="text-objetivos-4">Ingrese la fecha limite de visualización del video:</label>
+                                    <input name="dFecFin"
+                                           id="dFecFin" class="form-control-lg form-control" type="date"
+                                           value=""
+                                           required
+                                    />
+                                </div>
+                                <div class="col d-xxl-flex align-items-xxl-end col-auto">
+                                    <div class="form-check form-switch d-xxl-flex align-items-xxl-center" style="padding: 0;">
+                                        <input name="switch-contenido-video"
+                                               id="switch-contenido" class="form-check-input" type="checkbox" role="switch"
+                                               
+                                        />
+                                        <label class="form-check-label label-crud" for="formCheck-1">Mostrar Video</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <input type="file" name="file" id="input-archivo" class="form-control form-control-lg" required>
+                    </div>
+
+                    <div class="mt-4">
+                        <button name="iTipo" value="2" onclick="enviarFormularioContenido('form-video', '1')"
+                                class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-guardar" id="btn-guardar"
+                                type="button"
+                                style="font-family: 'Cantarell';">
+                            <img class="img-footer-patron" src="../static/assets/img/__Palomita.svg?h=51f400c4ab0a7851208de7357cf4b75e">
+                            Guardar video
+                        </button>
+                        <div class="row d-xxl-flex align-items-xxl-center row-cols-2 gy-4" id="div-editar">
+                            <div class="col col-md-6">
+                                <button class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-amarillo"
+                                        id="btn-editar" type="button" style="font-family: 'Cantarell';"
+                                        onclick="enviarFormularioContenido('form-video', '2')">
+                                    <img class="img-footer-patron" src="../static/assets/img/__Editar blanco.svg">
+                                    Guardar cambios
+                                </button>
+                            </div>
+                            <div class="col col-md-6">
+                                <button class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-danger"
+                                        id="btn-eliminar"
+                                        type="button" style="font-family: 'Cantarell';"
+                                        onclick="enviarFormularioContenido('form-video', '3')">
+                                    <img class="img-footer-patron" src="../static/assets/img/__Eliminar%20blanco.svg">
+                                    Eliminar video
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="collapse-escrito" class="collapse">
+                    <div class="mt-4"><label class="form-label label-crud" for="text-objetivos-1">Defina las pautas de elaboración de la actividad de aprendizaje</label>
+                        <div class="input-group"><span class="input-group-text span-contenido"><img src="../static/assets/img/__Pautas%20de%20elaboración.svg?h=d2cc2be321f7dbc75499f4fb1c908911" height="40" style="margin: 10px;margin-left: 0px;">Pautas de elaboración</span><textarea class="form-control" id="text-objetivos-1"></textarea></div>
+                    </div>
+                    <div class="mt-4"><label class="form-label label-crud" for="text-objetivos-2">Exprese los cuales serán los criterios de evaluación de la actividad de aprendizaje</label>
+                        <div class="input-group"><span class="input-group-text span-contenido"><img src="../static/assets/img/__Criterios%20de%20evaluación.svg?h=2bb42e08029fee88ffe4e0c7d5b1baf7" height="40" style="margin: 10px;margin-left: 0px;">Criterios de evaluación</span><textarea class="form-control" id="text-objetivos-2"></textarea></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapse" id="collapse-archivo">
+                <form action="/crud_contenido" method="POST" enctype="multipart/form-data" id="form-archivo">
+                    <div class="mt-4"><label class="form-label label-crud" for="vcTitulo">Asigne un titulo al archivo</label>
+                        <div class="input-group"><span class="input-group-text span-contenido"><img src="../static/assets/img/__Tarea.svg?h=daff51d1798dcaac435f9986c6af2376" height="40" style="margin: 10px;margin-left: 0px;">Titulo</span>
+                            <textarea class="form-control" name="vcTitulo" id="text-titulo"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-4"><label class="form-label label-crud" for="text-objetivos">Describa los objetivos del archivo</label>
+                        <div class="input-group"><span class="input-group-text span-contenido"><img src="../static/assets/img/__Objetivos.svg?h=2a2d58655e83d4c6f3fe88e1f790a0cd" height="40" style="margin: 10px;margin-left: 0px;">Objetivos</span>
+                            <textarea class="form-control" name="vcObjetivos" id="text-objetivos"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="container-fluid container-fechas">
+                            <div class="row">
+                                <div class="col"><label class="form-label label-crud" for="dFecInicio">Ingrese la fecha de publicación del archivo:</label>
+                                    <input name="dFecInicio"
+                                           id="dFecInicio"
+                                           class="form-control-lg form-control" type="date"
+                                           value=""
+                                           required
+                                    />
+                                </div>
+                                <div class="col"><label class="form-label label-crud" for="dFecFin">Ingrese la fecha limite de visualización del archivo:</label>
+                                    <input name="dFecFin"
+                                           id="dFecFin" class="form-control-lg form-control" type="date"
+                                           value=""
+                                           required
+                                    />
+                                </div>
+                                <div class="col d-xxl-flex align-items-xxl-end col-auto">
+                                    <div class="form-check form-switch d-xxl-flex align-items-xxl-center" style="padding: 0;">
+                                        <input name="switch-contenido-archivo"
+                                               id="switch-contenido" class="form-check-input" type="checkbox" role="switch"
+                                               
+                                        />
+                                        <label class="form-check-label label-crud" for="formCheck-1">Mostrar Archivo</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <input type="file" name="file" id="input-archivo" class="form-control form-control-lg" required>
+                    </div>
+
+                    <div class="mt-4">
+                        <button name="iTipo" value="3" onclick="enviarFormularioContenido('form-archivo', '1')"
+                                class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-guardar" id="btn-guardar"
+                                type="button"
+                                style="font-family: 'Cantarell';">
+                            <img class="img-footer-patron" src="../static/assets/img/__Palomita.svg?h=51f400c4ab0a7851208de7357cf4b75e">
+                            Guardar archivo
+                        </button>
+                        <div class="row d-xxl-flex align-items-xxl-center row-cols-2 gy-4" id="div-editar">
+                            <div class="col col-md-6">
+                                <button class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-amarillo"
+                                        id="btn-editar" type="button" style="font-family: 'Cantarell';"
+                                        onclick="enviarFormularioContenido('form-archivo', '2')">
+                                    <img class="img-footer-patron" src="../static/assets/img/__Editar blanco.svg">
+                                    Guardar cambios
+                                </button>
+                            </div>
+                            <div class="col col-md-6">
+                                <button class="btn btn-success btn-lg d-xxl-flex justify-content-xxl-center align-items-xxl-center d-block w-100 btn-danger"
+                                        id="btn-eliminar"
+                                        type="button" style="font-family: 'Cantarell';"
+                                        onclick="enviarFormularioContenido('form-archivo', '3')">
+                                    <img class="img-footer-patron" src="../static/assets/img/__Eliminar%20blanco.svg">
+                                    Eliminar archivo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/assets/js/jquery.min.js?h=6bcc3684f18aa21874fa709f122723cf"></script>
+<script src="../static/assets/bootstrap/js/bootstrap.min.js?h=374d178d651fa0eaf680a1fa7b40c788"></script>
+<script src="../static/assets/js/asignaturas.js?h=8aeeb8bf7333ec17ad6a4734aa2e949a"></script>
+<script src="../static/assets/js/crud-contenidos.js?h=311c0b07c7c85b9ddd946b7ded6a1bff"></script>
+<script src="../static/assets/js/login.js?h=8b5d69aa014e93ea1e4a2cb62d4d07ff"></script>
+<script src="../static/assets/js/omni.js?h=457204e222950430a6340870dd601a30"></script>
+{#    <script src="../static/assets/js/tema.js?h=263fb8e73e0ca9881cbf2e7cfa173e37"></script>#}
+<script src="../static/assets/js/temas.js?h=81d10140ceb8b3cd4cd46c69b7154d08"></script>
+
+
+
+</body>
+
+</html>

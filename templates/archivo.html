@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>BS_IPTIDI</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css?h=a549af2a81cd9900ee897d8bc9c4b5e9">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cambay:400,700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cantarell:700&amp;subset=latin-ext&amp;display=swap">
+    <link rel="stylesheet" href="../static/assets/css/Login-Form-Basic-icons.css?h=cb6bfa29dd54a2e3807e6c7db8cc8f5a">
+    <link rel="stylesheet" href="../static/assets/css/styles.css?h=b962d8285278184d96eacc46fec7a94a">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-tidi">
+        <div class="container-fluid">
+            <div class="container text-center" style="margin-top: 10px;margin-bottom: 10px;">
+                <div class="row">
+                    <div class="col-md-4 col-xxl-3 offset-xxl-0 align-self-center" style="/*margin: 50;*/"><img class="img-fluid" src="../static/assets/img/Imagotipo%20final%20plataforma%20tidi%20ia%20blanco-04%201%20(1).svg?h=78a72385a8e25eacb95720a1e9534356"></div>
+                    <div class="col-md-4 col-xxl-1 offset-6 align-self-center"><img class="img-fluid" src="../static/assets/img/Escudo%20unam%20blanco%201.svg?h=9cd4c3d52556f121c3d3a973dfdf065c"></div>
+                    <div class="col-md-4 col-xxl-2 align-self-center"><img class="img-fluid" width="118" height="94" src="../static/assets/img/tidi%20blanco-02%201.svg?h=1c8547b45cf23c8a84f16af5e598e616"></div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col offset-5"><button class="btn btn-primary btn-lg btn-header" id="btn-asignaturas" type="button">Asignaturas</button></div>
+                    <div class="col d-xxl-flex justify-content-xxl-center align-items-xxl-center"><button class="btn btn-primary btn-lg d-xxl-flex align-items-xxl-center btn-header" id="btn-cuenta" type="button"><img src="../static/assets/img/__Mi%20cuenta%20blanco.svg?h=efd811d953889482753b433b235346bc" style="height: 20px;">Mi cuenta</button></div>
+                    <div class="col justify-content-xxl-center"><button class="btn btn-primary btn-lg d-xxl-flex align-items-xxl-center btn-header" id="btn-cerrar-sesion" type="button"><img src="../static/assets/img/__Inicio%20de%20sesión%20blanco.svg?h=5625d411503dfbb7765638e5bbce52ef" style="width: 30px;">Cerrar&nbsp;sesión</button></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4 py-xl-5 container-asignaturas">
+        <div class="row mb-2">
+            <div class="col">
+                <h2 style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 35px;">
+                    <strong>
+                        {{ vcTitulo }}
+                    </strong>
+                </h2>
+                <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;"> Archivo </p>
+            </div>
+            <div class="col col-auto" style="text-align: right;">
+                <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;">
+                    Fecha de activación:&nbsp;
+                    <strong>
+                        {{ dFecInicio }}
+                    </strong>
+                </p>
+                <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;">
+                    Fecha de cierre:&nbsp;
+                    <strong>
+                        {{ dFecFin }}
+                    </strong>
+                </p>
+            </div>
+        </div>
+
+        {% if iTipoUsuario == 1 %}
+        <div class="row d-xxl-flex justify-content-xxl-end mb-2">
+            <div class="col col-auto" style="margin-bottom: 24px;">
+                <a class="btn btn-lg d-xxl-flex align-items-xxl-center btn-amarillo" type="button" href="{{ url_for('crud_contenido') }}">
+                    <img class="img-footer-patron" src="../static/assets/img/__Editar blanco.svg" />Editar contenido
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="row row-cols-1 gy-4">
+            <div class="col">
+                <div class="accordion accordion-flush accordion-actividad" role="tablist" id="accordion-1">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" role="tab"><button class="accordion-button accordion-button-actividad" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-1" aria-expanded="true" aria-controls="accordion-1 .item-1" style="border-radius: 51px;"><img src="../static/assets/img/__Objetivos.svg?h=2a2d58655e83d4c6f3fe88e1f790a0cd" height="40" style="margin: 10px;margin-left: 0px;">Objetivos</button></h2>
+                        <div class="accordion-collapse collapse show item-1" role="tabpanel" data-bs-parent="#accordion-1">
+                            <div class="accordion-body">
+                                {% for objetivo in objetivos %}
+                                    <p class="mb-0">
+                                        {{ objetivo }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col d-xxl-flex justify-content-xxl-center align-items-xxl-center">
+                {% for archivo in archivos %}
+                    <iframe class="pdf" src="{{ archivo.path }}"
+                            width="100%" height="500px" style="border: none;"></iframe>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{#    <div class="container py-4 py-xl-5 container-asignaturas">#}
+{#        <div class="row mb-2">#}
+{#            <div class="col">#}
+{#                <h2 style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 35px;">Examen</h2>#}
+{#                <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;">Pirámide de Kaiser</p>#}
+{#            </div>#}
+{#            <div class="col" style="text-align: right;">#}
+{#                <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;">Fecha de activación:&nbsp;&nbsp;<strong>11/Noviembre/2024</strong></p>#}
+{#                <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;">Fecha de cierre:&nbsp;<strong>24/Noviembre/2024</strong></p>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="row row-cols-1 gy-4 mb-4">#}
+{#            <div class="col">#}
+{#                <div class="accordion accordion-flush accordion-actividad" role="tablist" id="accordion-1">#}
+{#                    <div class="accordion-item">#}
+{#                        <h2 class="accordion-header" role="tab"><button class="accordion-button accordion-button-actividad" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-1" aria-expanded="true" aria-controls="accordion-1 .item-1" style="border-radius: 51px;"><img src="../static/assets/img/__Objetivos.svg?h=2a2d58655e83d4c6f3fe88e1f790a0cd" height="40" style="margin: 10px;margin-left: 0px;">Objetivos</button></h2>#}
+{#                        <div class="accordion-collapse collapse show item-1" role="tabpanel" data-bs-parent="#accordion-1">#}
+{#                            <div class="accordion-body">#}
+{#                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col">#}
+{#                <div class="accordion accordion-flush accordion-actividad" role="tablist" id="accordion-5">#}
+{#                    <div class="accordion-item">#}
+{#                        <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed accordion-button-actividad" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-5 .item-1" aria-expanded="false" aria-controls="accordion-5 .item-1" style="border-radius: 51px;"><img src="../static/assets/img/__Pautas%20de%20elaboración.svg?h=d2cc2be321f7dbc75499f4fb1c908911" height="40" style="margin: 10px;margin-left: 0px;">Pautas de elaboración</button></h2>#}
+{#                        <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-5">#}
+{#                            <div class="accordion-body">#}
+{#                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col">#}
+{#                <div class="accordion accordion-flush accordion-actividad" role="tablist" id="accordion-4">#}
+{#                    <div class="accordion-item">#}
+{#                        <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed accordion-button-actividad" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-4 .item-1" aria-expanded="false" aria-controls="accordion-4 .item-1" style="border-radius: 51px;"><img src="../static/assets/img/__Criterios%20de%20evaluación.svg?h=2bb42e08029fee88ffe4e0c7d5b1baf7" height="40" style="margin: 10px;margin-left: 0px;">Criterios de evaluación</button></h2>#}
+{#                        <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-4">#}
+{#                            <div class="accordion-body">#}
+{#                                <p class="mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col">#}
+{#                <div class="accordion accordion-flush accordion-actividad" role="tablist" id="accordion-2">#}
+{#                    <div class="accordion-item">#}
+{#                        <h2 class="accordion-header" role="tab"><button class="accordion-button accordion-button-actividad" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-1" aria-expanded="true" aria-controls="accordion-2 .item-1" style="border-radius: 51px;"><img src="../static/assets/img/__Rúbrica.svg?h=1909f19263c2788148d7c879a66f8f15" height="40" style="margin: 10px;margin-left: 0px;">Rúbrica</button></h2>#}
+{#                        <div class="accordion-collapse collapse show item-1" role="tabpanel" data-bs-parent="#accordion-2">#}
+{#                            <div class="accordion-body">#}
+{#                                <div class="table-responsive text-center" style="color: #003366;">#}
+{#                                    <table class="table align-middle">#}
+{#                                        <thead>#}
+{#                                            <tr>#}
+{#                                                <th></th>#}
+{#                                                <th>Descripción</th>#}
+{#                                                <th>Puntación máxima (puntos)</th>#}
+{#                                                <th>Peso %</th>#}
+{#                                            </tr>#}
+{#                                        </thead>#}
+{#                                        <tbody class="table-group-divider">#}
+{#                                            <tr>#}
+{#                                                <td>Criterio 1</td>#}
+{#                                                <td>Situación actual</td>#}
+{#                                                <td>5</td>#}
+{#                                                <td>50%</td>#}
+{#                                            </tr>#}
+{#                                            <tr>#}
+{#                                                <td>Criterio 2</td>#}
+{#                                                <td>Alternativas</td>#}
+{#                                                <td>5</td>#}
+{#                                                <td>50%</td>#}
+{#                                            </tr>#}
+{#                                        </tbody>#}
+{#                                    </table>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="row d-xxl-flex align-items-xxl-center gy-4 mb-4">#}
+{#            <div class="col"><button class="btn btn-primary btn-lg d-block w-100 btn-amarillo" type="submit">Ir al examen</button></div>#}
+{#        </div>#}
+{#        <div class="row mb-2" style="text-align: center;">#}
+{#            <div class="col">#}
+{#                <h2 style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 35px;">Intentos permitidos</h2>#}
+{#                <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;">1</p>#}
+{#            </div>#}
+{#            <div class="col">#}
+{#                <h2 style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 35px;">Calificación</h2>#}
+{#                <p class="w-lg-50" style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 20px;">10</p>#}
+{#            </div>#}
+{#            <div class="col">#}
+{#                <h2 style="font-family: 'Cantarell';font-weight: bold;color: #003366;font-size: 35px;">Revisión</h2><button class="btn btn-primary btn-azul" type="submit">Ir a la revisión</button>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    <script src="../static/assets/js/jquery.min.js?h=6bcc3684f18aa21874fa709f122723cf"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js?h=374d178d651fa0eaf680a1fa7b40c788"></script>
+    <script src="../static/assets/js/asignaturas.js?h=8aeeb8bf7333ec17ad6a4734aa2e949a"></script>
+{#    <script src="../static/assets/js/crud-contenidos.js?h=311c0b07c7c85b9ddd946b7ded6a1bff"></script>#}
+    <script src="../static/assets/js/login.js?h=8b5d69aa014e93ea1e4a2cb62d4d07ff"></script>
+    <script src="../static/assets/js/omni.js?h=457204e222950430a6340870dd601a30"></script>
+    {#    <script src="../static/assets/js/tema.js?h=263fb8e73e0ca9881cbf2e7cfa173e37"></script>#}
+    <script src="../static/assets/js/temas.js?h=81d10140ceb8b3cd4cd46c69b7154d08"></script>
+</body>
+
+</html>

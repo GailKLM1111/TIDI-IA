@@ -1,0 +1,41 @@
+networks:
+  tidi-ia-network:
+volumes:
+    tidi-ia-db-data:
+services:
+  postgres:
+    image: postgres:latest
+    container_name: tidi-ia-db
+    environment:
+      POSTGRES_USER: tidi_ia_admin
+      POSTGRES_PASSWORD: TIDIia
+      POSTGRES_DB: BD_TIDI_IA
+    ports:
+      - 5432:5432
+    volumes:
+      - tidi-ia-db-data:/var/lib/postgresql/
+    networks:
+      - tidi-ia-network
+#  pgadmin:
+#    image: dpage/pgadmin4:latest
+#    container_name: tidi-ia-pgadmin
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: tidi-ia@admin.com
+#      PGADMIN_DEFAULT_PASSWORD: TIDI-IA2024
+#    ports:
+#      - 80:90
+#    depends_on:
+#      - postgres
+#    networks:
+#      - tidi-ia-network
+  sistema:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    depends_on:
+      - postgres
+    networks:
+      - tidi-ia-network
