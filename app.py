@@ -857,7 +857,7 @@ def crud_contenido():
 
         print(contenido)
 
-        iNumTema = contenido.get('iNumTema')[0]
+        iNumTema = contenido.get('iNumTema')
         vcTitulo = contenido.get('vcTitulo')
         vcObjetivos = contenido.get('vcObjetivos')
         dFecInicio = contenido.get('dFecInicio')
@@ -902,6 +902,7 @@ def crud_contenido():
                         contenido_actual.jActividad = contenido.get('registroCasos')
 
                         db.session.commit()
+
                     case 3:
                         # Eliminamos la actividad de aprendizaje
                         iNumContenido = contenido.get('iNumContenido', None)
@@ -934,6 +935,7 @@ def crud_contenido():
                                 contenido_actual.bActivo = bActivo
                                 contenido_actual.iTipo = iTipo
                                 db.session.commit()
+
                             else:
                                 print('No se ha seleccionado ningún archivo')
                         elif archivo and archivoPermitido(archivo.filename):
@@ -960,6 +962,7 @@ def crud_contenido():
 
                                 db.session.add(nuevo_contenido)
                                 db.session.commit()
+
                             else:
                                 # Obtenemos el contenido a modificar
                                 iNumContenido = contenido.get('iNumContenido')
@@ -981,6 +984,7 @@ def crud_contenido():
                                 contenido_actual.byArchivo = archivo.read()
 
                                 db.session.commit()
+
                 else:
                     # Obtenemos el contenido a eliminar
                     iNumContenido = contenido.get('iNumContenido')
@@ -1044,6 +1048,7 @@ def crud_contenido():
 
                                 db.session.add(nuevo_contenido)
                                 db.session.commit()
+
                             else:
                                 # Obtenemos el contenido a modificar
                                 iNumContenido = contenido.get('iNumContenido')
@@ -1084,6 +1089,9 @@ def crud_contenido():
 
             case _:
                 print('Invalid option')
+
+        # Actualizamos el tema en la session
+        session['iNumTema'] = iNumTema
 
         # redireccionamos a la página de crud-contenido
         if request.is_json:
@@ -1223,7 +1231,7 @@ def obtener_info_general_contenido():
     iNumContenido = request.get_json().get('iNumContenido')
 
     # Obtenemos el contenido
-    contenido = Contenido.query.filter_by(iNumContenido=iNumContenido[0], iNumTema=iNumTema[0]).first()
+    contenido = Contenido.query.filter_by(iNumContenido=iNumContenido[0], iNumTema=iNumTema).first()
 
     return jsonify({'vcTitulo': contenido.vcTitulo,
                     'vcObjetivos': contenido.vcObjetivos,
